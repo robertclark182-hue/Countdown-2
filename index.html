@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+        #countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .time-segment {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 80px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .number {
+            display: block;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Counting down to Feb 27, 5:30 PM</h1>
+        <div id="countdown">
+            <div class="time-segment"><span class="number" id="days">00</span><span class="label">Days</span></div>
+            <div class="time-segment"><span class="number" id="hours">00</span><span class="label">Hours</span></div>
+            <div class="time-segment"><span class="number" id="minutes">00</span><span class="label">Minutes</span></div>
+            <div class="time-segment"><span class="number" id="seconds">00</span><span class="label">Seconds</span></div>
+        </div>
+    </div>
+
+    <script>
+        // Set the target date: February 27, 2026 at 17:30:00 (5:30 PM)
+        const targetDate = new Date("Feb 27, 2026 17:30:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the results
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
+            // If the countdown is over
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector(".container").innerHTML = "<h1>The time has arrived!</h1>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
